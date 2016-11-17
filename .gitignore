@@ -1,0 +1,12 @@
+Library/
+Temp/
+*.sln
+*.csproj
+*.sln
+*.userprefs
+*.unityproj
+*.DS_Store
+*._*
+runtime/ios
+obj/
+StreamingAssets*
