@@ -1,5 +1,5 @@
 # ToluaGameDemo01
-tolua游戏开发Demo01，作者：roc_hgh  
+tolua游戏开发第一个Demo01（三消演示），作者：roc_hgh  
 说明:  
 1、演示Demo采用LuaFramework_UGUI框架（非常强大！！！）  
 2、框架地址：https://github.com/jarjin/LuaFramework_UGUI  
