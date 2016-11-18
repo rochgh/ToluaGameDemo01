@@ -3,7 +3,7 @@
 local Chess = import(".Chess");
 local ChessData = import(".ChessData");
 local Constant = import(".Constant");
-local Utils = import(".Utils");
+-- local Utils = import(".Utils");
 
 local ChessBoard = class("ChessBoard");
 
