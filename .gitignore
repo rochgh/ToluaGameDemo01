@@ -10,4 +10,6 @@ Temp/
 runtime/ios
 obj/
 StreamingAssets*
-Generate/
+Assets/LuaFramework/ToLua/Source/Generate/
+!Assets/LuaFramework/ToLua/Source/Generate/DelegateFactory.*
+!Assets/LuaFramework/ToLua/Source/Generate/LuaBinder.*
