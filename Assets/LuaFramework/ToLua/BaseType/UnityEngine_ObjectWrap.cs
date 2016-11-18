@@ -7,19 +7,19 @@ public class UnityEngine_ObjectWrap
 	public static void Register(LuaState L)
 	{
 		L.BeginClass(typeof(UnityEngine.Object), typeof(System.Object));
+		L.RegFunction("Equals", Equals);
+		L.RegFunction("GetHashCode", GetHashCode);
+		L.RegFunction("GetInstanceID", GetInstanceID);
 		L.RegFunction("FindObjectsOfType", FindObjectsOfType);
+		L.RegFunction("FindObjectOfType", FindObjectOfType);
 		L.RegFunction("DontDestroyOnLoad", DontDestroyOnLoad);
 		L.RegFunction("ToString", ToString);
-		L.RegFunction("GetInstanceID", GetInstanceID);
-		L.RegFunction("GetHashCode", GetHashCode);
-		L.RegFunction("Equals", Equals);
-		L.RegFunction("FindObjectOfType", FindObjectOfType);
 		L.RegFunction("Instantiate", Instantiate);
 		L.RegFunction("DestroyImmediate", DestroyImmediate);
 		L.RegFunction("Destroy", Destroy);
 		L.RegFunction("New", _CreateUnityEngine_Object);
 		L.RegFunction("__eq", op_Equality);
-		L.RegFunction("__tostring", ToLua.op_ToString);
+		L.RegFunction("__tostring", Lua_ToString);
 		L.RegVar("name", get_name, set_name);
 		L.RegVar("hideFlags", get_hideFlags, set_hideFlags);
 		L.EndClass();
@@ -50,6 +50,58 @@ public class UnityEngine_ObjectWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int Equals(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 2);
+			UnityEngine.Object obj = (UnityEngine.Object)ToLua.CheckObject(L, 1, typeof(UnityEngine.Object));
+			object arg0 = ToLua.ToVarObject(L, 2);
+			bool o = obj != null ? obj.Equals(arg0) : arg0 == null;
+			LuaDLL.lua_pushboolean(L, o);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int GetHashCode(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 1);
+			UnityEngine.Object obj = (UnityEngine.Object)ToLua.CheckObject(L, 1, typeof(UnityEngine.Object));
+			int o = obj.GetHashCode();
+			LuaDLL.lua_pushinteger(L, o);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int GetInstanceID(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 1);
+			UnityEngine.Object obj = (UnityEngine.Object)ToLua.CheckObject(L, 1, typeof(UnityEngine.Object));
+			int o = obj.GetInstanceID();
+			LuaDLL.lua_pushinteger(L, o);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int FindObjectsOfType(IntPtr L)
 	{
 		try
@@ -57,6 +109,23 @@ public class UnityEngine_ObjectWrap
 			ToLua.CheckArgsCount(L, 1);
 			System.Type arg0 = (System.Type)ToLua.CheckObject(L, 1, typeof(System.Type));
 			UnityEngine.Object[] o = UnityEngine.Object.FindObjectsOfType(arg0);
+			ToLua.Push(L, o);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int FindObjectOfType(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 1);
+			System.Type arg0 = (System.Type)ToLua.CheckObject(L, 1, typeof(System.Type));
+			UnityEngine.Object o = UnityEngine.Object.FindObjectOfType(arg0);
 			ToLua.Push(L, o);
 			return 1;
 		}
@@ -91,75 +160,6 @@ public class UnityEngine_ObjectWrap
 			UnityEngine.Object obj = (UnityEngine.Object)ToLua.CheckObject(L, 1, typeof(UnityEngine.Object));
 			string o = obj.ToString();
 			LuaDLL.lua_pushstring(L, o);
-			return 1;
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e);
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int GetInstanceID(IntPtr L)
-	{
-		try
-		{
-			ToLua.CheckArgsCount(L, 1);
-			UnityEngine.Object obj = (UnityEngine.Object)ToLua.CheckObject(L, 1, typeof(UnityEngine.Object));
-			int o = obj.GetInstanceID();
-			LuaDLL.lua_pushinteger(L, o);
-			return 1;
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e);
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int GetHashCode(IntPtr L)
-	{
-		try
-		{
-			ToLua.CheckArgsCount(L, 1);
-			UnityEngine.Object obj = (UnityEngine.Object)ToLua.CheckObject(L, 1, typeof(UnityEngine.Object));
-			int o = obj.GetHashCode();
-			LuaDLL.lua_pushinteger(L, o);
-			return 1;
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e);
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int Equals(IntPtr L)
-	{
-		try
-		{
-			ToLua.CheckArgsCount(L, 2);
-			UnityEngine.Object obj = (UnityEngine.Object)ToLua.CheckObject(L, 1, typeof(UnityEngine.Object));
-			object arg0 = ToLua.ToVarObject(L, 2);
-			bool o = obj != null ? obj.Equals(arg0) : arg0 == null;
-			LuaDLL.lua_pushboolean(L, o);
-			return 1;
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e);
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int FindObjectOfType(IntPtr L)
-	{
-		try
-		{
-			ToLua.CheckArgsCount(L, 1);
-			System.Type arg0 = (System.Type)ToLua.CheckObject(L, 1, typeof(System.Type));
-			UnityEngine.Object o = UnityEngine.Object.FindObjectOfType(arg0);
-			ToLua.Push(L, o);
 			return 1;
 		}
 		catch(Exception e)
@@ -312,6 +312,23 @@ public class UnityEngine_ObjectWrap
         {
             return LuaDLL.toluaL_exception(L, e);
         }
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int Lua_ToString(IntPtr L)
+	{
+		object obj = ToLua.ToObject(L, 1);
+
+		if (obj != null)
+		{
+			LuaDLL.lua_pushstring(L, obj.ToString());
+		}
+		else
+		{
+			LuaDLL.lua_pushnil(L);
+		}
+
+		return 1;
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]

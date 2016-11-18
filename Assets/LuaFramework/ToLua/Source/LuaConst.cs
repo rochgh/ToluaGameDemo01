@@ -5,9 +5,6 @@ public static class LuaConst
     public static string luaDir = Application.dataPath + "/LuaFramework/Lua";
     public static string toluaDir = Application.dataPath + "/LuaFramework/ToLua/Lua";
 
-    // public static string luaDir = Application.dataPath + "/Lua";
-    // public static string toluaDir = Application.dataPath + "/LuaFramework/ToLua/Lua";
-
 #if UNITY_STANDALONE
     public static string osDir = "Win";
 #elif UNITY_ANDROID

@@ -11,7 +11,9 @@ public class System_TypeWrap
 		L.RegFunction("GetType", GetType);
 		L.RegFunction("GetTypeArray", GetTypeArray);
 		L.RegFunction("GetTypeCode", GetTypeCode);
+		L.RegFunction("GetTypeFromCLSID", GetTypeFromCLSID);
 		L.RegFunction("GetTypeFromHandle", GetTypeFromHandle);
+		L.RegFunction("GetTypeFromProgID", GetTypeFromProgID);
 		L.RegFunction("GetTypeHandle", GetTypeHandle);
 		L.RegFunction("IsSubclassOf", IsSubclassOf);
 		L.RegFunction("FindInterfaces", FindInterfaces);
@@ -37,7 +39,7 @@ public class System_TypeWrap
 		L.RegFunction("MakeByRefType", MakeByRefType);
 		L.RegFunction("MakePointerType", MakePointerType);
 		L.RegFunction("ReflectionOnlyGetType", ReflectionOnlyGetType);
-		L.RegFunction("__tostring", ToLua.op_ToString);
+		L.RegFunction("__tostring", Lua_ToString);
 		L.RegVar("Delimiter", get_Delimiter, null);
 		L.RegVar("EmptyTypes", get_EmptyTypes, null);
 		L.RegVar("FilterAttribute", get_FilterAttribute, null);
@@ -221,6 +223,56 @@ public class System_TypeWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int GetTypeFromCLSID(IntPtr L)
+	{
+		try
+		{
+			int count = LuaDLL.lua_gettop(L);
+
+			if (count == 1 && TypeChecker.CheckTypes(L, 1, typeof(System.Guid)))
+			{
+				System.Guid arg0 = (System.Guid)ToLua.ToObject(L, 1);
+				System.Type o = System.Type.GetTypeFromCLSID(arg0);
+				ToLua.Push(L, o);
+				return 1;
+			}
+			else if (count == 2 && TypeChecker.CheckTypes(L, 1, typeof(System.Guid), typeof(string)))
+			{
+				System.Guid arg0 = (System.Guid)ToLua.ToObject(L, 1);
+				string arg1 = ToLua.ToString(L, 2);
+				System.Type o = System.Type.GetTypeFromCLSID(arg0, arg1);
+				ToLua.Push(L, o);
+				return 1;
+			}
+			else if (count == 2 && TypeChecker.CheckTypes(L, 1, typeof(System.Guid), typeof(bool)))
+			{
+				System.Guid arg0 = (System.Guid)ToLua.ToObject(L, 1);
+				bool arg1 = LuaDLL.lua_toboolean(L, 2);
+				System.Type o = System.Type.GetTypeFromCLSID(arg0, arg1);
+				ToLua.Push(L, o);
+				return 1;
+			}
+			else if (count == 3 && TypeChecker.CheckTypes(L, 1, typeof(System.Guid), typeof(string), typeof(bool)))
+			{
+				System.Guid arg0 = (System.Guid)ToLua.ToObject(L, 1);
+				string arg1 = ToLua.ToString(L, 2);
+				bool arg2 = LuaDLL.lua_toboolean(L, 3);
+				System.Type o = System.Type.GetTypeFromCLSID(arg0, arg1, arg2);
+				ToLua.Push(L, o);
+				return 1;
+			}
+			else
+			{
+				return LuaDLL.luaL_throw(L, "invalid arguments to method: System.Type.GetTypeFromCLSID");
+			}
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int GetTypeFromHandle(IntPtr L)
 	{
 		try
@@ -230,6 +282,56 @@ public class System_TypeWrap
 			System.Type o = System.Type.GetTypeFromHandle(arg0);
 			ToLua.Push(L, o);
 			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int GetTypeFromProgID(IntPtr L)
+	{
+		try
+		{
+			int count = LuaDLL.lua_gettop(L);
+
+			if (count == 1 && TypeChecker.CheckTypes(L, 1, typeof(string)))
+			{
+				string arg0 = ToLua.ToString(L, 1);
+				System.Type o = System.Type.GetTypeFromProgID(arg0);
+				ToLua.Push(L, o);
+				return 1;
+			}
+			else if (count == 2 && TypeChecker.CheckTypes(L, 1, typeof(string), typeof(string)))
+			{
+				string arg0 = ToLua.ToString(L, 1);
+				string arg1 = ToLua.ToString(L, 2);
+				System.Type o = System.Type.GetTypeFromProgID(arg0, arg1);
+				ToLua.Push(L, o);
+				return 1;
+			}
+			else if (count == 2 && TypeChecker.CheckTypes(L, 1, typeof(string), typeof(bool)))
+			{
+				string arg0 = ToLua.ToString(L, 1);
+				bool arg1 = LuaDLL.lua_toboolean(L, 2);
+				System.Type o = System.Type.GetTypeFromProgID(arg0, arg1);
+				ToLua.Push(L, o);
+				return 1;
+			}
+			else if (count == 3 && TypeChecker.CheckTypes(L, 1, typeof(string), typeof(string), typeof(bool)))
+			{
+				string arg0 = ToLua.ToString(L, 1);
+				string arg1 = ToLua.ToString(L, 2);
+				bool arg2 = LuaDLL.lua_toboolean(L, 3);
+				System.Type o = System.Type.GetTypeFromProgID(arg0, arg1, arg2);
+				ToLua.Push(L, o);
+				return 1;
+			}
+			else
+			{
+				return LuaDLL.luaL_throw(L, "invalid arguments to method: System.Type.GetTypeFromProgID");
+			}
 		}
 		catch(Exception e)
 		{
@@ -806,6 +908,23 @@ public class System_TypeWrap
 		{
 			return LuaDLL.toluaL_exception(L, e);
 		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int Lua_ToString(IntPtr L)
+	{
+		object obj = ToLua.ToObject(L, 1);
+
+		if (obj != null)
+		{
+			LuaDLL.lua_pushstring(L, obj.ToString());
+		}
+		else
+		{
+			LuaDLL.lua_pushnil(L);
+		}
+
+		return 1;
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]

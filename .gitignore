@@ -10,3 +10,4 @@ Temp/
 runtime/ios
 obj/
 StreamingAssets*
+Generate/
