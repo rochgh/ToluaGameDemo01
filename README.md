@@ -10,6 +10,6 @@ tolua游戏开发第一个Demo01（三消演示），作者：roc_hgh
 
 执行步骤：
 
-1、工具栏上执行lua->Generate All。
-2、工具栏上执行LuaFramework->Build XXX Resource.
-3、开始游戏。
+1、工具栏上执行lua->Generate All。  
+2、工具栏上执行LuaFramework->Build XXX Resource.  
+3、开始游戏。  
